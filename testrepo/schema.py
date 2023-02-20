@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import strawberry
 
 @strawberry.type
@@ -17,14 +18,19 @@ class User:
 
   @strawberry.field
   async def name(self) -> str:
-    return f'User {self.id}'
+    return f'Name {self.id}'
+
+@dataclass
+class OtherUserObject:
+  id: int
+
 
 @strawberry.type
 class Query:
   @strawberry.field
   async def users(self) -> list[User]:
     return [
-      User(id=id)
+      OtherUserObject(id=id)
       async for id in UsersCounter()
     ]
 
